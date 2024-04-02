@@ -2,11 +2,12 @@ from random import randint
 
 
 class Player:
-    hp = 100
-    damage = 10
-    wins = 0
-    fol = 0
-
+    population = 100
+    economy = 10
+    military_power = 0
+    science_and_technology = 0
+    resources = 0
+    territory = 0
 
 p = Player()
 
@@ -19,14 +20,17 @@ class Enemy:
 def menu(p):
     while True:
         print("""1) Сражаться
-2) Статистика""")
+2) Статистика
+3) Посадить зерно""")
         try:
             n = input("Введите число: ")
 
             if int(n) == 1:
                 menu_fight(p)
-            if int(n) == 2:
+            elif int(n) == 2:
                 menu_stats(p)
+            elif int(n) == 3:
+                eat(p)
             else:
                 print("Чего ждем?")
 
@@ -42,10 +46,18 @@ def menu_stats(p):
     print("Статистика игрока")
     print("*****************")
     print(f"""
-побед: {p.wins}
-поражений: {p.fol}
+Население вашего государства: {p.population}
+Ваша экономика: {p.economy}
+Военная мощь государства: {p.military_power}
+Наука и технологии: {p.science_and_technology}
+Ваши ресурсы: {p.political_stability}
+Ваши территории: {p.territory}
 """)
 
+def eat(p):
+    print("Посадить зерно")
+    p.resources += randint(1, 5) * randint(1, 5)
+    p.territory -= 10
 
 def menu_fight(p):
     p.hp = 100
@@ -80,11 +92,11 @@ def menu_fight(p):
         if p.hp < 0:
             print("Вы проиграли")
             p.fol += 1
-            brake
+            break
         if e.hp < 0:
             print("Вы победили")
             p.wins += 1
-            brake
+            break
 
 
 menu(p)
