@@ -1,4 +1,6 @@
 from random import randint
+from events import events
+from player_actions import actions
 
 
 def players():
@@ -7,6 +9,18 @@ def players():
     for i in range(players_count):
         p = Player()
         players[i + 1] = p
+
+    player_number = 1
+    while len(players) > 1:
+        player = players.get(player_number, 'не найдено')
+        if player == 'не найдено':
+            player_number += 1
+            if player_number > players_count:
+                player_number = 1
+            continue
+        print(f'Ход игрока с номером {player_number}')
+        menu(player)
+        player_number += 1
 
 
 class Player:
@@ -26,81 +40,37 @@ class Player:
 Ваши территории: {self.territory}""")
 
 
-p = Player()
+def get_player_choice():
+    print(f"""
+            Меню:
+            0) Статистика
+            1) Посадить зерно
+            """)
+    n = input("Введите число: ")
+    return n
 
 
-class Enemy:
-    hp = randint(70, 130)
-    damage = randint(6, 13)
+def menu(player):
+    n = get_player_choice()
+    while actions.get(n, 'не найдено') == 'не найдено':
+        print('Вы ввели неправильно, попробуйте ещё раз')
+        n = get_player_choice()
+
+    while n == '0':
+        action = actions.get(n, 'не найдено')
+        action(player)
+        n = get_player_choice()
+
+    action = actions.get(n, 'не найдено')
+    action(player)
+
+    event_number = randint(0, len(events))
+    if event_number == 0:
+        print('Никаких событий не произошло')
+        return
+    event = events.get(event_number)
+    print(f'Произошёл {event[0]}')
+    event[1](player)
 
 
-def menu(p):
-    while True:
-        print(f"""
-Меню:
-1) Сражаться
-2) Статистика
-3) Посадить зерно""")
-        n = input("Введите число: ")
-
-        if int(n) == 1:
-            menu_fight(p)
-        elif int(n) == 2:
-            menu_stats(p)
-        elif int(n) == 3:
-            eat(p)
-        else:
-            print("Чего ждем?")
-
-
-def menu_stats(p):
-    print("Статистика игрока")
-    print("*****************")
-    print(p.stats())
-
-
-def eat(p):
-    print("Посадить зерно")
-    p.resources += randint(1, 5) * randint(1, 5)
-    p.territory -= 10
-
-
-def menu_fight(p):
-    p.hp = 100
-    e = Enemy()
-
-    print(f"Вы hp: {p.population} damage: {p.military_power}")
-    print(f"Враг hp: {e.hp} damage: {e.damage}")
-    print("**********************")
-    while e.hp > 0:
-        print("1)Ударить")
-        print("2)Хил 0-5")
-        n = input("Введите число: ")
-        if int(n) == 1:
-
-            e.hp -= p.military_power
-            print(f"Вы ударили противника, у него осталось {e.hp} hp")
-            p.population -= e.damage
-            print(f"Противник ударил вас, у вас осталось {p.population} hp")
-
-            print("*********************")
-
-        elif int(n) == 2:
-
-            p.population += randint(0, 5)
-            if p.population > 100:
-                p.population = 100
-
-            print(f"Ваши хп {p.population}")
-
-        else:
-            print("Чего ждем?")
-        if p.population < 0:
-            print("Вы проиграли")
-            break
-        if e.hp < 0:
-            print("Вы победили")
-            break
-
-
-menu(p)
+players()
