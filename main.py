@@ -97,6 +97,6 @@ def menu(player):
         player.population = player.population*player.grow_population
         return
     event = events.get(event_number)
-    event[1](player)
+    event(player)
 
 players()

@@ -87,7 +87,7 @@ def reform(player):
         print('Реформы оказались удачными:\n Коэфициент роста популяции увеличен')
         i = randint(1, 5)
         if player.resources < 20:
-            print('На проведение реформы ваших запасв будет недостаточно, '
+            print('На проведение реформы ваших запасов будет недостаточно, '
                   'попробуйте принять другое решение\n') and reform(player)
         edit_res(player.science_and_technology, i) and edit_res(player.resources, -20)
     elif number == 2:
@@ -149,10 +149,16 @@ def military_up(player):
 
 def attack(player):
     number = int(input(f' Ваше государство подвергается внезапному нападению со стороны одного из соседних государств.\n'
+              f'Примите решение:\n'
+              f'1)Оказать сопротивление\n'
+              f'2)Попытаться договориться\n'))
+    while number != 1 or number != 2:
+        print('Попробуйте снова')
+        number = int(input(f' Ваше государство подвергается внезапному нападению со стороны одного из соседних государств.\n'
                        f'Примите решение:\n'
-                       f'1)Оказать отпор\n'
+                       f'1)Оказать сопротивление\n'
                        f'2)Попытаться договориться\n'))
-    if number == 1:
+    if number ==1:
         if player.military_power < 5:
             print(f'Ваши военные оказались слишком слабы,'
                   f' но вы смогли прогнать обидчиков.')
@@ -175,9 +181,6 @@ def attack(player):
                 print(f'Ваше воиско оказалось на порядок способнее, нападавшие были успешно разгромлены.\n'
                       f'Вы присоеденили себе их государство.')
                 edit_res(player.population, 50) and edit_res(player.resources, 25) and edit_res(player.territory, 80)
-    else:
-        print('Try again') and attack(player)
-
 
 def peace(player):
     number = int(input(f'Одно из соседних государств предлагает вам заключить союз.\n'
@@ -199,18 +202,18 @@ def peace(player):
 
 
 events = {
-        1: [burn_place],
-        2: [nature_event],
-        3: [conflict],
-        4: [reform],
-        5: [science],
-        6: [popul],
-        7: [medicine],
-        8: [military_up],
-        9: [attack],
-        10: [peace],
-        11: [burn_place],
-        12: [burn_place],
-        13: [burn_place],
-        14: [burn_place]
+        1: burn_place,
+        2: nature_event,
+        3: conflict,
+        4: reform,
+        5: science,
+        6: popul,
+        7: medicine,
+        8: military_up,
+        9: attack,
+        10: peace,
+        11: burn_place,
+        12: burn_place,
+        13: burn_place,
+        14: burn_place
     }
