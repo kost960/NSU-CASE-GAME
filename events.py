@@ -45,6 +45,7 @@ def burn_place(player):
         edit_res(player.military_power, i)
     elif number == 3:
         edit_res(player.resources, 100)
+        player.set_population(100)
     else:
         print('Try again') and burn_place(player)
 

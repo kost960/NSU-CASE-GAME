@@ -2,6 +2,9 @@ from random import randint
 from events import events
 from player_actions import actions
 
+def grow_population(players):
+    for player_number, player in players:
+        player.set_population(player.population * player.grow_population)
 
 def players():
     players_count = int(input('Введите количество игроков: '))
@@ -18,6 +21,19 @@ def players():
             if player_number > players_count:
                 player_number = 1
             continue
+
+        if player.territory <= 0 or player.population <= 0:
+            players.pop(player_number)
+            players_count -= 1
+            player_number += 1
+
+            if player_number > players_count:
+                player_number = 1
+            continue
+
+        if player_number == 1:
+            grow_population(players)
+
         print(f'Ход игрока с номером {player_number}')
         menu(player)
         player_number += 1
@@ -38,8 +54,19 @@ class Player:
 Наука и технологии: {self.science_and_technology}
 Ваши ресурсы: {self.resources}
 Ваши территории: {self.territory}""")
+    def set_population(self, new_population):
+        past_population = self.population
+        self.population = new_population
+        if new_population < 0:
+            self.population = 0
 
-
+        difference = past_population - new_population
+        if difference > 0:
+            print(f'Численность населения увеличина на {difference}\n')
+        elif difference < 0:
+            print(f'Численность населения уменьшена на {abs(difference)}\n')
+        else:
+            print(f'Численность населения не изменилось\n')
 def get_player_choice():
     print(f"""
             Меню:
@@ -71,9 +98,5 @@ def menu(player):
         return
     event = events.get(event_number)
     event[1](player)
-    player.population = player.population*player.grow_population
-    if player.territory == 0 or player.population == 0:
-
-
 
 players()
