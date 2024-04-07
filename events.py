@@ -3,7 +3,8 @@ from random import randint
 
 def edit_res(resourse, quantity):
     resourse += quantity
-
+    if quantity > 0:
+        if resourse ==
 def burn_place(player):
     number = int(input(f'Ваше государство обнаруживает новое месторождение ценного ресурса. Решите, как лучше использовать эту находку: \n'
           f'1)На развитие науки и технологий\n'
