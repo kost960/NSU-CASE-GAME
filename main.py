@@ -72,6 +72,7 @@ def menu(player):
     event = events.get(event_number)
     event[1](player)
     player.population = player.population*player.grow_population
+    if player.territory == 0 or player.population == 0:
 
 
 
