@@ -153,7 +153,7 @@ def attack(player):
                        f'2)Попытаться договориться\n'))
     if number == 1:
         if player.military_power < 5:
-            print(f'Ваши военные оказались слишком слабым,'
+            print(f'Ваши военные оказались слишком слабы,'
                   f' но вы смогли прогнать обидчиков.')
             edit_res(player.population, -30) and edit_res(player.resources, -15) and edit_res(player.territory, -10)
         else:
@@ -167,7 +167,7 @@ def attack(player):
         else:
             print('Нападавшие не стали вас слушать, у вас не осталось иного выбора, как засчитаться')
             if player.military_power < 5:
-                print(f'Ваши военные оказались слишком слабым,'
+                print(f'Ваши военные оказались слишком слабы,'
                       f' но вы смогли прогнать обидчиков.')
                 edit_res(player.population, -30) and edit_res(player.resources, -15) and edit_res(player.territory, -10)
             else:
@@ -176,6 +176,25 @@ def attack(player):
                 edit_res(player.population, 50) and edit_res(player.resources, 25) and edit_res(player.territory, 80)
     else:
         print('Try again') and attack(player)
+
+
+def peace(player):
+    number = int(input(f'Одно из соседних государств предлагает вам заключить союз.\n'
+                       f'1)Согласиться\n'
+                       f'2)Напасть, пока этого не ждут.\n'))
+    if number == 1:
+        edit_res(player.military_power, 2) and edit_res(player.resources, 10)
+    elif number == 2:
+        if player.military_power < 3:
+            print(f'Ваши военные оказались слишком слабы,'
+                  f' вас прогнали.')
+            edit_res(player.population, -30) and edit_res(player.resources, -10) and edit_res(player.territory, -10)
+        else:
+            print(f'Ваше воиско оказалось на порядок способнее, нападавшие были успешно разгромлены.\n'
+                  f'Вы присоеденили себе их государство.')
+            edit_res(player.population, 30) and edit_res(player.resources, 20) and edit_res(player.territory, 40)
+    else:
+        print('Try again') and peace(player)
 
 
 events = {
@@ -188,7 +207,7 @@ events = {
         7: [medicine],
         8: [military_up],
         9: [attack],
-        10: [burn_place],
+        10: [peace],
         11: [burn_place],
         12: [burn_place],
         13: [burn_place],
