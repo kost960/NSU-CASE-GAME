@@ -30,6 +30,7 @@ def nature_event(player):
         edit_res(player.territory, -30)
 
 
+
 events = {
         1: ['я юсек', usec],
         2: ['я бир', bear]

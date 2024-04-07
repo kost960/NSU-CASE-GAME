@@ -25,11 +25,11 @@ def players():
 
 class Player:
     population = 100
-    economy = 100
-    military_power = 100
-    science_and_technology = 100
+    military_power = 1 #max 15
+    science_and_technology = 1 #max 30
     resources = 100
     territory = 100
+    economy = (population / 1000) + (territory / 1000) + (science_and_technology / 30)
 
     def stats(self):
         return (f"""Население вашего государства: {self.population}
@@ -71,6 +71,7 @@ def menu(player):
     event = events.get(event_number)
     print(f'Произошёл {event[0]}')
     event[1](player)
+
 
 
 players()
