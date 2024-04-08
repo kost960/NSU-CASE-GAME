@@ -67,6 +67,91 @@ class Player:
             print(f'Численность населения уменьшена на {abs(difference)}\n')
         else:
             print(f'Численность населения не изменилось\n')
+
+    def set_military_power(self, new_military_power):
+        past_military_power = self.military_power
+        self.military_power = new_military_power
+        if new_military_power < 0:
+            self.military_power = 0
+
+        difference = past_military_power - new_military_power
+        if difference > 0:
+            print(f'Военное преимущество усилено на {difference}\n')
+        elif difference < 0:
+            print(f'Военное преимущество ослабло на {abs(difference)}\n')
+        else:
+            print(f'Военное преимущество не изменилось\n')
+
+    def set_science_and_technology(self, new_science_and_technology):
+        past_science_and_technology = self.science_and_technology
+        self.science_and_technology = new_science_and_technology
+        if new_science_and_technology < 0:
+            self.science_and_technology = 0
+
+        difference = past_science_and_technology - new_science_and_technology
+        if difference > 0:
+            print(f'Наука и технологии развиты на {difference}\n')
+        elif difference < 0:
+            print(f'Потери в развитии науки и технологи составляют {abs(difference)}\n')
+        else:
+            print(f'Наука и технологии остались на прежнем уровне\n')
+
+    def set_resources(self, new_resources):
+        past_resources = self.resources
+        self.resources = new_resources
+        if new_resources < 0:
+            self.resources = 0
+
+        difference = past_resources - new_resources
+        if difference > 0:
+            print(f'Наука и технологии развиты на {difference}\n')
+        elif difference < 0:
+            print(f'Потери в развитии науки и технологи составляют {abs(difference)}\n')
+        else:
+            print(f'Наука и технологии остались на прежнем уровне\n')
+
+    def set_territory(self, new_territory):
+        past_territory = self.territory
+        self.territory = new_territory
+        if new_territory < 0:
+            self.territory = 0
+
+        difference = past_territory - new_territory
+        if difference > 0:
+            print(f'Наука и технологии развиты на {difference}\n')
+        elif difference < 0:
+            print(f'Потери в развитии науки и технологи составляют {abs(difference)}\n')
+        else:
+            print(f'Наука и технологии остались на прежнем уровне\n')
+
+    def set_economy(self, new_economy):
+        past_economy = self.economy
+        self.economy = new_economy
+        if new_economy < 0:
+            self.territory = 0
+
+        difference = past_economy - new_economy
+        if difference > 0:
+            print(f'Наука и технологии развиты на {difference}\n')
+        elif difference < 0:
+            print(f'Потери в развитии науки и технологи составляют {abs(difference)}\n')
+        else:
+            print(f'Наука и технологии остались на прежнем уровне\n')
+
+    def set_grow_population(self, new_grow_population):
+        past_grow_population = self.grow_population
+        self.grow_population = new_grow_population
+        if new_grow_population < 0:
+            self.grow_population = 0
+
+        difference = past_grow_population - new_grow_population
+        if difference > 0:
+            print(f'Наука и технологии развиты на {difference}\n')
+        elif difference < 0:
+            print(f'Потери в развитии науки и технологи составляют {abs(difference)}\n')
+        else:
+            print(f'Наука и технологии остались на прежнем уровне\n')
+
 def get_player_choice():
     print(f"""
             Меню:
