@@ -104,11 +104,11 @@ class Player:
 
         difference = past_resources - new_resources
         if difference > 0:
-            print(f'Наука и технологии развиты на {difference}\n')
+            print(f'Запасы ресурсов пополнены на {difference}\n')
         elif difference < 0:
-            print(f'Потери в развитии науки и технологи составляют {abs(difference)}\n')
+            print(f'Потрачено {abs(difference)} единиц ресурсов\n')
         else:
-            print(f'Наука и технологии остались на прежнем уровне\n')
+            print(f'Вы сохранили доступные ресурсы на прежнем уровне\n')
 
     def set_territory(self, new_territory):
         past_territory = self.territory
@@ -118,11 +118,11 @@ class Player:
 
         difference = past_territory - new_territory
         if difference > 0:
-            print(f'Наука и технологии развиты на {difference}\n')
+            print(f'Территория расширена на {difference}\n')
         elif difference < 0:
-            print(f'Потери в развитии науки и технологи составляют {abs(difference)}\n')
+            print(f'Территория уменьшилась на {abs(difference)}\n')
         else:
-            print(f'Наука и технологии остались на прежнем уровне\n')
+            print(f'Территория осталась на прежнем уровне\n')
 
     def set_economy(self, new_economy):
         past_economy = self.economy
@@ -132,11 +132,11 @@ class Player:
 
         difference = past_economy - new_economy
         if difference > 0:
-            print(f'Наука и технологии развиты на {difference}\n')
+            print(f'Объём экономики вырос на {difference}\n')
         elif difference < 0:
-            print(f'Потери в развитии науки и технологи составляют {abs(difference)}\n')
+            print(f'Объём экономики уменьшился на {abs(difference)}\n')
         else:
-            print(f'Наука и технологии остались на прежнем уровне\n')
+            print(f'Экономика осталась на прежнем уровне\n')
 
     def set_grow_population(self, new_grow_population):
         past_grow_population = self.grow_population
@@ -146,11 +146,11 @@ class Player:
 
         difference = past_grow_population - new_grow_population
         if difference > 0:
-            print(f'Наука и технологии развиты на {difference}\n')
+            print(f'Прирост популяции увеличился на {difference}\n')
         elif difference < 0:
-            print(f'Потери в развитии науки и технологи составляют {abs(difference)}\n')
+            print(f'Прирост популяции уменьшился на {abs(difference)}\n')
         else:
-            print(f'Наука и технологии остались на прежнем уровне\n')
+            print(f'Прирост популяции остался на прежнем уровне\n')
 
 def get_player_choice():
     print(f"""
