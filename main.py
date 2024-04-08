@@ -22,7 +22,7 @@ def players():
                 player_number = 1
             continue
 
-        if player.territory <= 0 or player.population <= 0:
+        if player.territory == 0 or player.population == 0:
             players.pop(player_number)
             players_count -= 1
             player_number += 1
