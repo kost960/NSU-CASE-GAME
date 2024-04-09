@@ -1,13 +1,18 @@
+# Case-study Game
+# Developers: Maltsev A., Kolchik K.
+#
+
 from random import randint
 from events import events
 from player_actions import actions
-
+import ru_local as ru
 def grow_population(players):
-    for player_number, player in players:
+    for player_number, player in players.items():
+        print(f'Население игрока под номером {player_number} изменено:')
         player.set_population(player.population * player.grow_population)
 
 def players():
-    players_count = int(input('Введите количество игроков: '))
+    players_count = int(input(f'{ru.PLAYER_NUMBER}'))
     players = {}
     for i in range(players_count):
         p = Player()
@@ -15,8 +20,8 @@ def players():
 
     player_number = 1
     while len(players) > 1:
-        player = players.get(player_number, 'не найдено')
-        if player == 'не найдено':
+        player = players.get(player_number, 'not found')
+        if player == 'not found':
             player_number += 1
             if player_number > players_count:
                 player_number = 1
@@ -34,7 +39,7 @@ def players():
         if player_number == 1:
             grow_population(players)
 
-        print(f'Ход игрока с номером {player_number}')
+        print(f'{ru.PLAYERS_MOVE}{player_number}')
         menu(player)
         player_number += 1
 
@@ -48,25 +53,24 @@ class Player:
     economy = (population / 1000) + (territory / 1000) + (science_and_technology / 30)
     grow_population = 1.3
     def stats(self):
-        return (f"""Население вашего государства: {self.population}
-Ваша экономика: {self.economy}
-Военная мощь государства: {self.military_power}
-Наука и технологии: {self.science_and_technology}
-Ваши ресурсы: {self.resources}
-Ваши территории: {self.territory}""")
+        return (f"""
+{ru.YOUR_POPULATION}{self.population}
+{ru.YOUR_ECONOMY}{self.economy}
+{ru.YOUR_MILITARY_POWER}{self.military_power}
+{ru.YOUR_SCIENCE}{self.science_and_technology}
+{ru.YOUR_RESOURCES}{self.resources}
+{ru.YOUR_TERRITORY}{self.territory}""")
     def set_population(self, new_population):
         past_population = self.population
         self.population = new_population
         if new_population < 0:
             self.population = 0
 
-        difference = past_population - new_population
+        difference = new_population - past_population
         if difference > 0:
-            print(f'Численность населения увеличина на {difference}\n')
+            print(f'{ru.GROW_POPULATION} {difference}\n')
         elif difference < 0:
-            print(f'Численность населения уменьшена на {abs(difference)}\n')
-        else:
-            print(f'Численность населения не изменилось\n')
+            print(f'{ru.DECLINE_POPULATION} {abs(difference)}\n')
 
     def set_military_power(self, new_military_power):
         past_military_power = self.military_power
@@ -74,13 +78,11 @@ class Player:
         if new_military_power < 0:
             self.military_power = 0
 
-        difference = past_military_power - new_military_power
+        difference = new_military_power - past_military_power
         if difference > 0:
-            print(f'Военное преимущество усилено на {difference}\n')
+            print(f'{ru.GROW_MILITARY} {difference}\n')
         elif difference < 0:
-            print(f'Военное преимущество ослабло на {abs(difference)}\n')
-        else:
-            print(f'Военное преимущество не изменилось\n')
+            print(f'{ru.DECLINE_MILITARY} {abs(difference)}\n')
 
     def set_science_and_technology(self, new_science_and_technology):
         past_science_and_technology = self.science_and_technology
@@ -88,13 +90,11 @@ class Player:
         if new_science_and_technology < 0:
             self.science_and_technology = 0
 
-        difference = past_science_and_technology - new_science_and_technology
+        difference = new_science_and_technology - past_science_and_technology
         if difference > 0:
-            print(f'Наука и технологии развиты на {difference}\n')
+            print(f'{ru.GROW_SCIENCE} {difference}\n')
         elif difference < 0:
-            print(f'Потери в развитии науки и технологи составляют {abs(difference)}\n')
-        else:
-            print(f'Наука и технологии остались на прежнем уровне\n')
+            print(f'{ru.DECLINE_SCIENCE} {abs(difference)}\n')
 
     def set_resources(self, new_resources):
         past_resources = self.resources
@@ -102,64 +102,72 @@ class Player:
         if new_resources < 0:
             self.resources = 0
 
-        difference = past_resources - new_resources
+        difference = new_resources - past_resources
         if difference > 0:
-            print(f'Запасы ресурсов пополнены на {difference}\n')
-        else:
-            print(f'Потрачено {abs(difference)} единиц ресурсов\n')
-
+            print(f'{ru.GROW_RESOURCES} {difference}\n')
+        elif difference < 0:
+            print(f'{ru.DECLINE_RESOURCES} {abs(difference)}\n')
     def set_territory(self, new_territory):
         past_territory = self.territory
         self.territory = new_territory
         if new_territory < 0:
             self.territory = 0
 
-        difference = past_territory - new_territory
+        difference = new_territory - past_territory
         if difference > 0:
-            print(f'Территория расширена на {difference}\n')
-        else:
-            print(f'Территория уменьшилась на {abs(difference)}\n')
-
+            print(f'{ru.GROW_TERRITORY} {difference}\n')
+        elif difference < 0:
+            print(f'{ru.DECLINE_TERRITORY} {abs(difference)}\n')
     def set_economy(self, new_economy):
         past_economy = self.economy
         self.economy = new_economy
         if new_economy < 0:
             self.territory = 0
 
-        difference = past_economy - new_economy
+        difference = new_economy - past_economy
         if difference > 0:
-            print(f'Объём экономики вырос на {difference}\n')
-        else:
-            print(f'Объём экономики уменьшился на {abs(difference)}\n')
+            print(f'{ru.GROW_ECONOMY} {difference}\n')
+        elif difference < 0:
+            print(f'{ru.DECLINE_ECONOMY} {abs(difference)}\n')
 
+
+    def set_grow_population(self, new_grow_population):
+        past_grow_population = self.grow_population
+        self.grow_population = new_grow_population
+
+        difference = new_grow_population - past_grow_population
+        if difference > 0:
+            print(f'Прирост популяции увеличился на {difference}\n')
+        elif difference < 0:
+            print(f'Прирост популяции уменьшился на {abs(difference)}\n')
+        else:
+            print(f'Прирост популяции остался на прежнем уровне\n')
 
 def get_player_choice():
-    print(f"""
-            Меню:
-            0) Статистика
-            1) Посадить зерно
-            """)
-    n = input("Введите число: ")
+    print(f'{ru.MENU}')
+    n = input(f"{ru.NUMBER}")
     return n
 
 
 def menu(player):
-    n = get_player_choice()
-    while actions.get(n, 'не найдено') == 'не найдено':
-        print('Вы ввели неправильно, попробуйте ещё раз')
+    chosen = False
+    while not chosen:
         n = get_player_choice()
+        while actions.get(n, 'not found') == 'not found':
+            print(f'{ru.TRY_AGAIN}')
+            n = get_player_choice()
 
-    while n == '0':
-        action = actions.get(n, 'не найдено')
-        action(player)
-        n = get_player_choice()
+        while n == '0':
+            action = actions.get(n, 'not found')
+            action(player)
+            n = get_player_choice()
 
-    action = actions.get(n, 'не найдено')
-    action(player)
+        action = actions.get(n, 'not found')
+        chosen = action(player)
 
     event_number = randint(0, len(events))
     if event_number == 0:
-        print('Никаких событий не произошло')
+        print(f'{ru.NO_EVENTS}')
         player.population = player.population*player.grow_population
         return
     event = events.get(event_number)

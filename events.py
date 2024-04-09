@@ -1,177 +1,138 @@
 from random import randint
-
-
-def edit_res(res, quantity):
-    res += quantity
-    if quantity == 0:
-        print(f'Вам повезло, вы сохранили доступные ресурсы')
-
+import ru_local as ru
 
 def burn_place(player):
-    number = int(input(f'Ваше государство обнаруживает новое месторождение ценного ресурса. Решите, как лучше '
-                       f'использовать эту находку: \n'
-                       f'1)На развитие науки и технологий\n'
-                       f'2)Увеличить военное преимущества\n'
-                       f'3)Сохранить для возможного использования в будущем\n'))
+    number = int(input(f'{ru.BURN_PLACE}'))
     if number == 1:
         i = randint(3, 8)
-        edit_res(player.science_and_technology, i)
+        player.set_science_and_technology(player.science_and_technology + i)
     elif number == 2:
         i = randint(1, 3)
-        edit_res(player.military_power, i)
+        player.set_military_power(player.military_power + i)
     elif number == 3:
-        edit_res(player.resources, 100)
-        player.set_population(100)
+        player.set_resources(player.resources + 100)
     else:
         print('Try again') and burn_place(player)
 
 
 def nature_event(player):
-    number = int(input(f'В вашем государстве происходит природная катастрофа. Необходимо быстро принять решение о том, '
-                       f'как справиться с последствиями: \n'
-                       f'1)Отправить часть населения на пораженные зоны\n'
-                       f'2)Никак не реагировать\n'))
+    number = int(input(f'{ru.NATURE_EVENT}'))
     if number == 1:
         i = randint(-45, -10)
-        edit_res(player.population, i)
+        player.set_population(player.population + i)
     elif number == 2:
-        edit_res(player.territory, -30)
+        player.set_territory(player.territory - 30)
     else:
         print('Try again') and nature_event(player)
 
 
 def conflict(player):
-    number = int(input(f'На границе вашего государства возникает конфликт с соседями. Нужно решить, как реагировать: \n'
-                       f'1)Попытаться разрешить ситуацию мирным путем\n'
-                       f'2)Применить силу\n'))
+    number = int(input(f'{ru.CONFLICT}'))
     if number == 1:
-        edit_res(player.population, 0)
+        player.set_population(player.population + 0)
     elif number == 2:
         i = randint(-20, 0)
         m = randint(0, 50)
-        edit_res(player.population, i) and edit_res(player.territory, m)
+        player.set_population(player.population + i) and player.set_territory(player.territory + m)
     else:
         print('Try again') and conflict(player)
 
 
 def reform(player):
-    number = int(input(f'Один из ваших министров предлагает провести реформы, на их проведение затребуется некоторое '
-                       f'количество ресурсов. Рассмотрите предложение и решите, стоит ли его принимать. \n'
-                       f'1)Рискуем\n'
-                       f'2)Они того не стоят\n'))
+    number = int(input(f'{ru.SECOND_REFORM}'))
     if number == 1:
-        print('Реформы оказались удачными:\n Коэфициент роста популяции увеличен')
+        print(f'{ru.SUCCESS}')
         if player.resources < 20:
-            print('На проведение реформы ваших запасов будет недостаточно, '
-                  'попробуйте принять другое решение\n') and reform(player)
-        edit_res(player.grow_population, +0.3) and edit_res(player.resources, -20)
+            print(f'{ru.NO_RESOURCES2}') and reform(player)
+        player.set_grow_population(player.grow_population + 0.3) and player.set_resources(player.resources - 20)
     elif number == 2:
-        edit_res(player.population, 0)
+        player.set_population(player.population + 0)
     else:
         print('Try again') and reform(player)
 
 
 def science(player):
-    print(f'В вашем государстве происходит научное открытие. \n')
+    print(f'{ru.OPEN_SCIENCE}')
     i = randint(1, 5)
-    edit_res(player.science_and_technology, i)
+    player.set_science_and_technology(player.science_and_technology + i)
 
 
 def popul(player):
-    number = int(input(f'Приток беженцев из соседнего государства в связи с военными действиями на его территории. '
-                       f'Примите решение \n'
-                       f'1)Впускаем всех\n'
-                       f'2)Закрываем границы\n'))
+    number = int(input(f'{ru.POPUL}'))
     if number == 1:
         i = randint(-20, -10)
         if player.resourses < abs(i):
-            print('На всех не хватит ресурсов, попробуйте принять другое решение\n') and popul(player)
+            print(f'{ru.NO_RESOURCES2}') and popul(player)
         else:
-            edit_res(player.resourses, i) and edit_res(player.population, 50)
+            player.set_resourses(player.resourses + i) and player.set_population(player.population + 50)
     elif number == 2:
-        edit_res(player.population, 0)
+        player.set_population(player.population + 0)
     else:
         print('Try again') and popul(player)
 
 
 def medicine(player):
-    number = int(input(f' Ваше государство сталкивается с проблемой нехватки медикаментов. Решите, как действовать:\n'
-                       f'1)Ввести нормирование медикаментов\n'
-                       f'2)Начать разработку новой технологии производства\n'))
+    number = int(input(f'{ru.MEDICINE}'))
     if number == 1:
         i = randint(-40, -10)
-        edit_res(player.population, i)
+        player.set_population(player.population + i)
     elif number == 2:
         if player.resources < 10:
-            print('Недостаточно ресурсов') and medicine(player)
+            print(f'{ru.NO_RESOURCES}') and medicine(player)
         else:
-            edit_res(player.science_and_technology, 2) and edit_res(player.resources, -10)
+            player.set_science_and_technology(player.science_and_technology + 2) and player.set_resources(player.resources - 10)
     else:
         print('Try again') and medicine(player)
 
 
 def military_up(player):
-    number = int(input(f' Представители другого государства предлагают провести совместные военные учения.\n'
-                       f'1)Согласиться\n'
-                       f'2)Отказаться\n'))
+    number = int(input(f"""{ru.MILITARY_UP}
+                       {ru.APPLY}
+                       {ru.DECLINE}"""))
     if number == 1:
-        edit_res(player.military_power, 3) and edit_res(player.resources, -15)
+        player.set_military_power(player.military_power + 3) and player.set_resources(player.resources + -15)
     elif number == 2:
-        edit_res(player.science_and_technology, 1)
+        player.set_science_and_technology(player.science_and_technology + 1)
     else:
         print('Try again') and medicine(player)
 
 
 def attack(player):
-    number = int(input(f' Ваше государство подвергается внезапному нападению со стороны одного из соседних государств.\n'
-              f'Примите решение:\n'
-              f'1)Оказать сопротивление\n'
-              f'2)Попытаться договориться\n'))
+    number = int(input(f'{ru.ATTACK}'))
     while number != 1 or number != 2:
-        print('Попробуйте снова')
-        number = int(input(f' Ваше государство подвергается внезапному нападению со стороны одного из соседних государств.\n'
-                       f'Примите решение:\n'
-                       f'1)Оказать сопротивление\n'
-                       f'2)Попытаться договориться\n'))
+        print(f'{ru.TRY_AGAIN}')
+        number = int(input(f'{ru.ATTACK}'))
     if number ==1:
         if player.military_power < 5:
-            print(f'Ваши военные оказались слишком слабы,'
-                  f' но вы смогли прогнать обидчиков.')
-            edit_res(player.population, -30) and edit_res(player.resources, -15) and edit_res(player.territory, -10)
+            print(f'{ru.UNLUCKY_ATTACK}')
+            player.set_population(player.population + -30) and player.set_resources(player.resources + -15) and player.set_territory(player.territory + -10)
         else:
-            print(f'Ваше воиско оказалось на порядок способнее, нападавшие были успешно разгромлены.\n'
-                  f'Вы присоеденили себе их государство.')
-            edit_res(player.population, 50) and edit_res(player.resources, 25) and edit_res(player.territory, 80)
+            print(f'{ru.SUCCESS_ATTACK}')
+            player.set_population(player.population + 50) and player.set_resources(player.resources + 25) and player.set_territory(player.territory + 80)
     elif number == 2:
         i = randint(1,2)
         if i == 1:
-            print('Успех, дипломатия вашего государства на высшем уровне.')
+            print(f'{ru.DIPLOMACY}')
         else:
-            print('Нападавшие не стали вас слушать, у вас не осталось иного выбора, как засчитаться')
+            print(f'{ru.NO_DIPLOMACY}')
             if player.military_power < 5:
-                print(f'Ваши военные оказались слишком слабы,'
-                      f' но вы смогли прогнать обидчиков.')
-                edit_res(player.population, -30) and edit_res(player.resources, -15) and edit_res(player.territory, -10)
+                print(f'{ru.UNLUCKY_ATTACK}')
+                player.set_population(player.population + -30) and player.set_resources(player.resources + -15) and player.set_territory(player.territory + -10)
             else:
-                print(f'Ваше воиско оказалось на порядок способнее, нападавшие были успешно разгромлены.\n'
-                      f'Вы присоеденили себе их государство.')
-                edit_res(player.population, 50) and edit_res(player.resources, 25) and edit_res(player.territory, 80)
+                print(f'{ru.SUCCESS_ATTACK}')
+                player.set_population(player.population + 50) and player.set_resources(player.resources + 25) and player.set_territory(player.territory + 80)
 
 def peace(player):
-    number = int(input(f'Одно из соседних государств предлагает вам заключить союз.\n'
-                       f'1)Согласиться\n'
-                       f'2)Напасть, пока этого не ждут.\n'))
+    number = int(input(f'{ru.PEACE}'))
     if number == 1:
-        edit_res(player.military_power, 2) and edit_res(player.resources, 10)
+        player.set_military_power(player.military_power + 2) and player.set_resources(player.resources + 10)
     elif number == 2:
         if player.military_power < 3:
-            print(f'Ваши военные оказались слишком слабы,'
-                  f' вас прогнали.')
-            edit_res(player.population, -30) and edit_res(player.resources, -10) and edit_res(player.territory, -10)
+            print(f'{ru.VERY_UNLUCKY_ATTACK}')
+            player.set_population(player.population + -30) and player.set_resources(player.resources + -10) and player.set_territory(player.territory + -10)
         else:
-            print(f'Ваше воиско оказалось на порядок способнее, нападавшие были успешно разгромлены.\n'
-                  f'Вы присоеденили себе их государство.')
-            edit_res(player.population, 30) and edit_res(player.resources, 20) and edit_res(player.territory, 40)
+            print(f'{ru.VERY_SUCCESS_ATTACK}')
+            player.set_population(player.population + 30) and player.set_resources(player.resources + 20) and player.set_territory(player.territory + 40)
     else:
         print('Try again') and peace(player)
 
