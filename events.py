@@ -3,31 +3,7 @@ from random import randint
 
 def edit_res(res, quantity):
     res += quantity
-    if res < 0:
-        res = 0
-    if quantity > 0:
-        if f'{res}' == 'player.population':
-            print(f'Численность населения увеличина на{quantity}\n')
-        elif f'{res}' == 'player.military_power':
-            print(f'Военное преимущество усилено на{quantity}\n')
-        elif f'{res}' == 'player.science_and_technology':
-            print(f'Наука и технологии развиты на{quantity}\n')
-        elif f'{res}' == 'player.resources':
-            print(f'Запасы ресурсов пополнены на{quantity}\n')
-        else:
-            print(f'Территория расширена на{quantity}\n')
-    elif quantity < 0:
-        if f'{res}' == 'player.population':
-            print(f'Было потеряно {quantity} населения\n')
-        elif f'{res}' == 'player.military_power':
-            print(f'Военное преимущество ослабло на {quantity}\n')
-        elif f'{res}' == 'player.science_and_technology':
-            print(f'Потери в развитии науки и технологи состовляют {quantity}\n')
-        elif f'{res}' == 'player.resources':
-            print(f'Потрачено {quantity} единиц ресурсов\n')
-        else:
-            print(f'Территория уменьшилась на {quantity}\n')
-    else:
+    if quantity == 0:
         print(f'Вам повезло, вы сохранили доступные ресурсы')
 
 
@@ -85,11 +61,10 @@ def reform(player):
                        f'2)Они того не стоят\n'))
     if number == 1:
         print('Реформы оказались удачными:\n Коэфициент роста популяции увеличен')
-        i = randint(1, 5)
         if player.resources < 20:
             print('На проведение реформы ваших запасов будет недостаточно, '
                   'попробуйте принять другое решение\n') and reform(player)
-        edit_res(player.science_and_technology, i) and edit_res(player.resources, -20)
+        edit_res(player.grow_population, +0.3) and edit_res(player.resources, -20)
     elif number == 2:
         edit_res(player.population, 0)
     else:
