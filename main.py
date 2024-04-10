@@ -7,11 +7,17 @@ from events import events
 from player_actions import actions
 import ru_local as ru
 def grow_population(players):
+    '''
+    Function responsible for population growth.
+    '''
     for player_number, player in players.items():
         print(f'Население игрока под номером {player_number} изменено:')
         player.set_population(player.population * player.grow_population)
 
 def players():
+    '''
+    Function responsible for move transition.
+    '''
     players_count = int(input(f'{ru.PLAYER_NUMBER}'))
     players = {}
     for i in range(players_count):
@@ -60,6 +66,11 @@ class Player:
 {ru.YOUR_SCIENCE}{self.science_and_technology}
 {ru.YOUR_RESOURCES}{self.resources}
 {ru.YOUR_TERRITORY}{self.territory}""")
+
+    '''
+    Below are the methods responsible for checking and reflecting changes in characteristics.
+    '''
+
     def set_population(self, new_population):
         past_population = self.population
         self.population = new_population
@@ -137,19 +148,24 @@ class Player:
 
         difference = new_grow_population - past_grow_population
         if difference > 0:
-            print(f'Прирост популяции увеличился на {difference}\n')
+            print(f'{ru.GROW_SET_POPULATION} {difference}\n')
         elif difference < 0:
-            print(f'Прирост популяции уменьшился на {abs(difference)}\n')
-        else:
-            print(f'Прирост популяции остался на прежнем уровне\n')
+            print(f'{ru.DECLINE_SET_POPULATION} {abs(difference)}\n')
+
 
 def get_player_choice():
+    '''
+    Function responsible for selecting a player in the menu.
+    '''
     print(f'{ru.MENU}')
     n = input(f"{ru.NUMBER}")
     return n
 
 
 def menu(player):
+    '''
+    The function responsible for choosing an action and choosing a solution in a random event.
+    '''
     chosen = False
     while not chosen:
         n = get_player_choice()
