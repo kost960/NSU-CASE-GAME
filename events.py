@@ -1,6 +1,7 @@
 from random import randint
 import ru_local as ru
 
+
 def burn_place(player):
     number = int(input(f'{ru.BURN_PLACE}'))
     if number == 1:
@@ -80,7 +81,8 @@ def medicine(player):
         if player.resources < 10:
             print(f'{ru.NO_RESOURCES}') and medicine(player)
         else:
-            player.set_science_and_technology(player.science_and_technology + 2) and player.set_resources(player.resources - 10)
+            player.set_science_and_technology(player.science_and_technology + 2) and player.set_resources(
+                player.resources - 10)
     else:
         print('Try again') and medicine(player)
 
@@ -102,25 +104,30 @@ def attack(player):
     while number != 1 or number != 2:
         print(f'{ru.TRY_AGAIN}')
         number = int(input(f'{ru.ATTACK}'))
-    if number ==1:
+    if number == 1:
         if player.military_power < 5:
             print(f'{ru.UNLUCKY_ATTACK}')
-            player.set_population(player.population + -30) and player.set_resources(player.resources + -15) and player.set_territory(player.territory + -10)
+            player.set_population(player.population + -30) and player.set_resources(
+                player.resources + -15) and player.set_territory(player.territory + -10)
         else:
             print(f'{ru.SUCCESS_ATTACK}')
-            player.set_population(player.population + 50) and player.set_resources(player.resources + 25) and player.set_territory(player.territory + 80)
+            player.set_population(player.population + 50) and player.set_resources(
+                player.resources + 25) and player.set_territory(player.territory + 80)
     elif number == 2:
-        i = randint(1,2)
+        i = randint(1, 2)
         if i == 1:
             print(f'{ru.DIPLOMACY}')
         else:
             print(f'{ru.NO_DIPLOMACY}')
             if player.military_power < 5:
                 print(f'{ru.UNLUCKY_ATTACK}')
-                player.set_population(player.population + -30) and player.set_resources(player.resources + -15) and player.set_territory(player.territory + -10)
+                player.set_population(player.population + -30) and player.set_resources(
+                    player.resources + -15) and player.set_territory(player.territory + -10)
             else:
                 print(f'{ru.SUCCESS_ATTACK}')
-                player.set_population(player.population + 50) and player.set_resources(player.resources + 25) and player.set_territory(player.territory + 80)
+                player.set_population(player.population + 50) and player.set_resources(
+                    player.resources + 25) and player.set_territory(player.territory + 80)
+
 
 def peace(player):
     number = int(input(f'{ru.PEACE}'))
@@ -129,27 +136,29 @@ def peace(player):
     elif number == 2:
         if player.military_power < 3:
             print(f'{ru.VERY_UNLUCKY_ATTACK}')
-            player.set_population(player.population + -30) and player.set_resources(player.resources + -10) and player.set_territory(player.territory + -10)
+            player.set_population(player.population + -30) and player.set_resources(
+                player.resources + -10) and player.set_territory(player.territory + -10)
         else:
             print(f'{ru.VERY_SUCCESS_ATTACK}')
-            player.set_population(player.population + 30) and player.set_resources(player.resources + 20) and player.set_territory(player.territory + 40)
+            player.set_population(player.population + 30) and player.set_resources(
+                player.resources + 20) and player.set_territory(player.territory + 40)
     else:
         print('Try again') and peace(player)
 
 
 events = {
-        1: burn_place,
-        2: nature_event,
-        3: conflict,
-        4: reform,
-        5: science,
-        6: popul,
-        7: medicine,
-        8: military_up,
-        9: attack,
-        10: peace,
-        11: burn_place,
-        12: burn_place,
-        13: burn_place,
-        14: burn_place
-    }
+    1: burn_place,
+    2: nature_event,
+    3: conflict,
+    4: reform,
+    5: science,
+    6: popul,
+    7: medicine,
+    8: military_up,
+    9: attack,
+    10: peace,
+    11: burn_place,
+    12: burn_place,
+    13: burn_place,
+    14: burn_place
+}

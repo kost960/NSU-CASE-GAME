@@ -15,8 +15,8 @@ def eat(player):
 """))
     if number == 1:
         i = int(input(f'{ru.EAT2}\n'))
-        player.set_resources(player.resources + randint(1, 5) * 5 * (i//10))
-        player.set_territory(player.territory - (i//10)*10)
+        player.set_resources(player.resources + randint(1, 5) * 5 * (i // 10))
+        player.set_territory(player.territory - (i // 10) * 10)
         return True
     elif number == 2:
         return False
@@ -67,14 +67,15 @@ def territory(player):
 """))
     if number == 1:
         quantity = int(input(f'{ru.QUANTITY}'))
-        player.population -= (randint(0,10)/10)*quantity
-        player.territory += randint(5,15)*quantity
+        player.population -= (randint(0, 10) / 10) * quantity
+        player.territory += randint(5, 15) * quantity
         return True
     elif number == 2:
         return False
     else:
         print(f'Wrong, try again')
         return False
+
 
 def reform(player):
     number = int(input(f"""{ru.REFORM}
@@ -97,13 +98,11 @@ def reform(player):
         return False
 
 
-
-
 actions = {
-    '0':menu_stats,
-    '1':eat,
-    '2':science,
-    '3':military,
-    '4':territory,
-    '5':reform
-    }
+    '0': menu_stats,
+    '1': eat,
+    '2': science,
+    '3': military,
+    '4': territory,
+    '5': reform
+}

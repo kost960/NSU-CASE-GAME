@@ -6,6 +6,8 @@ from random import randint
 from events import events
 from player_actions import actions
 import ru_local as ru
+
+
 def grow_population(players):
     '''
     Function responsible for population growth.
@@ -13,6 +15,7 @@ def grow_population(players):
     for player_number, player in players.items():
         print(f'Население игрока под номером {player_number} изменено:')
         player.set_population(player.population * player.grow_population)
+
 
 def players():
     '''
@@ -52,12 +55,13 @@ def players():
 
 class Player:
     population = 100
-    military_power = 1 #max 15
-    science_and_technology = 1 #max 30
+    military_power = 1  # max 15
+    science_and_technology = 1  # max 30
     resources = 50
     territory = 100
     economy = (population / 1000) + (territory / 1000) + (science_and_technology / 30)
     grow_population = 1.3
+
     def stats(self):
         return (f"""
 {ru.YOUR_POPULATION}{self.population}
@@ -118,6 +122,7 @@ class Player:
             print(f'{ru.GROW_RESOURCES} {difference}\n')
         elif difference < 0:
             print(f'{ru.DECLINE_RESOURCES} {abs(difference)}\n')
+
     def set_territory(self, new_territory):
         past_territory = self.territory
         self.territory = new_territory
@@ -129,6 +134,7 @@ class Player:
             print(f'{ru.GROW_TERRITORY} {difference}\n')
         elif difference < 0:
             print(f'{ru.DECLINE_TERRITORY} {abs(difference)}\n')
+
     def set_economy(self, new_economy):
         past_economy = self.economy
         self.economy = new_economy
@@ -140,7 +146,6 @@ class Player:
             print(f'{ru.GROW_ECONOMY} {difference}\n')
         elif difference < 0:
             print(f'{ru.DECLINE_ECONOMY} {abs(difference)}\n')
-
 
     def set_grow_population(self, new_grow_population):
         past_grow_population = self.grow_population
@@ -184,9 +189,10 @@ def menu(player):
     event_number = randint(0, len(events))
     if event_number == 0:
         print(f'{ru.NO_EVENTS}')
-        player.population = player.population*player.grow_population
+        player.population = player.population * player.grow_population
         return
     event = events.get(event_number)
     event(player)
+
 
 players()
