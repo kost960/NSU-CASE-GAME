@@ -13,9 +13,8 @@ def grow_population(players):
     Function responsible for population growth.
     '''
     for player_number, player in players.items():
-        print(f'Население игрока под номером {player_number} изменено:')
+        print(f'{ru.DEF_GROW_POPULATION1} {player_number} {ru.DEF_GROW_POPULATION2}')
         player.set_population(player.population * player.grow_population)
-
 
 def players():
     '''
@@ -23,6 +22,7 @@ def players():
     '''
     players_count = int(input(f'{ru.PLAYER_NUMBER}'))
     players = {}
+    winner = 0
     for i in range(players_count):
         p = Player()
         players[i + 1] = p
@@ -52,6 +52,14 @@ def players():
         menu(player)
         player_number += 1
 
+        if player.economy >= 3:
+            winner = player_number
+            print(f'{ru.WINNER} {winner}')
+            print(f'{ru.ECONOMY_WINNER}')
+            break
+
+    if len(players) == 1:
+        print(f'{ru.WINNER} {list(players.keys())[0]}')
 
 class Player:
     population = 100
